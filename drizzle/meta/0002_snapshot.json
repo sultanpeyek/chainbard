@@ -1,0 +1,239 @@
+{
+  "id": "213b41b1-958d-4615-a768-75de70609900",
+  "prevId": "33e7d97a-bd29-496c-8915-45815a4bd38e",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.tick_log": {
+      "name": "tick_log",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "started_at": {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "signal_source": {
+          "name": "signal_source",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "candidates_considered": {
+          "name": "candidates_considered",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pick_kind": {
+          "name": "pick_kind",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pick_identifier": {
+          "name": "pick_identifier",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pick_rationale": {
+          "name": "pick_rationale",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ace_receipts": {
+          "name": "ace_receipts",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sentinel_call_sig": {
+          "name": "sentinel_call_sig",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "memo_sig": {
+          "name": "memo_sig",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "webhook_posted": {
+          "name": "webhook_posted",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "error": {
+          "name": "error",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "tick_log_started_at_idx": {
+          "name": "tick_log_started_at_idx",
+          "columns": [
+            {
+              "expression": "started_at",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "tick_log_pick_identifier_idx": {
+          "name": "tick_log_pick_identifier_idx",
+          "columns": [
+            {
+              "expression": "pick_identifier",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.wallet_stories": {
+      "name": "wallet_stories",
+      "schema": "",
+      "columns": {
+        "input_hash": {
+          "name": "input_hash",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "input": {
+          "name": "input",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "story": {
+          "name": "story",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "provenance": {
+          "name": "provenance",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "memo_sig": {
+          "name": "memo_sig",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "payment_sig": {
+          "name": "payment_sig",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "brief": {
+          "name": "brief",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "brief_hash": {
+          "name": "brief_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {
+        "wallet_stories_input_idx": {
+          "name": "wallet_stories_input_idx",
+          "columns": [
+            {
+              "expression": "input",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "wallet_stories_created_at_idx": {
+          "name": "wallet_stories_created_at_idx",
+          "columns": [
+            {
+              "expression": "created_at",
+              "isExpression": false,
+              "asc": false,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "wallet_stories_provenance_check": {
+          "name": "wallet_stories_provenance_check",
+          "value": "\"wallet_stories\".\"provenance\" IN ('seed', 'buyer', 'curator', 'demo')"
+        }
+      },
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

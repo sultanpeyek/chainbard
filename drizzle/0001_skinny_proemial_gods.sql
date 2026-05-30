@@ -1,0 +1,2 @@
+ALTER TABLE "wallet_stories" DROP CONSTRAINT "wallet_stories_provenance_check";--> statement-breakpoint
+ALTER TABLE "wallet_stories" ADD CONSTRAINT "wallet_stories_provenance_check" CHECK ("wallet_stories"."provenance" IN ('seed', 'buyer', 'curator', 'demo'));

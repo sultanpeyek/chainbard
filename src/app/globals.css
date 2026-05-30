@@ -1,0 +1,274 @@
+@import "tailwindcss";
+
+/*
+ * chainbard design tokens — "ledger almanac".
+ *
+ * An editorial star-atlas / alchemical-broadsheet aesthetic: deep ink ground,
+ * warm bone foreground, a single molten-amber accent (the bard's lantern),
+ * hairline rules, grain. Display = Fraunces (high-contrast serif), data = IBM
+ * Plex Mono. Respects ADR 0002 — decoration is geometry/script/abstract only,
+ * never figures or motion-as-being.
+ */
+
+:root {
+  /* ── palette ─────────────────────────────────────────────────────────── */
+  --ink: #0b0a09; /* page ground — near-black, warm */
+  --ink-raised: #131110; /* raised panels */
+  --ink-line: #2a2622; /* hairline rules / borders */
+  --bone: #ece4d6; /* primary foreground text */
+  --bone-dim: #9b9182; /* secondary text */
+  --bone-faint: #6a6256; /* tertiary / captions */
+  --amber: #e8a13a; /* the lantern — single accent */
+  --amber-deep: #b9741b; /* accent pressed / shadow */
+  --ember: #d9542b; /* error / refundable */
+  --verdant: #6f8f5a; /* success / settled */
+
+  /* ── kind hues (subtle, for badges only) ─────────────────────────────── */
+  --kind-wallet: #c9a24a;
+  --kind-tx: #7ba2c4;
+  --kind-nft: #b07cc6;
+  --kind-token: #5aa087;
+
+  /* ── typography ──────────────────────────────────────────────────────── */
+  --font-display: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, "SF Mono", monospace;
+
+  /* ── spacing scale (8px base, golden-ish jumps) ──────────────────────── */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --space-32: 8rem;
+
+  /* ── motion ──────────────────────────────────────────────────────────── */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --dur-fast: 140ms;
+  --dur-med: 320ms;
+  --dur-slow: 640ms;
+
+  --background: var(--ink);
+  --foreground: var(--bone);
+}
+
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ink-raised: var(--ink-raised);
+  --color-ink-line: var(--ink-line);
+  --color-bone: var(--bone);
+  --color-bone-dim: var(--bone-dim);
+  --color-bone-faint: var(--bone-faint);
+  --color-amber: var(--amber);
+  --color-amber-deep: var(--amber-deep);
+  --color-ember: var(--ember);
+  --color-verdant: var(--verdant);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* ── custom scrollbar — almanac themed (replaces the stock white bar) ─────
+   Thin track-less rail; the thumb is a hairline-ink pill that warms to amber
+   on hover. Applies everywhere, including the Judge-view overlay panel. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ink-line) transparent;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--ink-line);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--amber-deep);
+  background-clip: padding-box;
+}
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+body {
+  background-color: var(--ink);
+  color: var(--bone);
+  font-family: var(--font-mono);
+  /* layered atmosphere: a low amber dawn from the top, deep ink below, and a
+     faint hairline grid evoking a ruled ledger / star chart. */
+  background-image:
+    radial-gradient(
+      120% 80% at 50% -10%,
+      color-mix(in oklab, var(--amber) 12%, transparent) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      90% 60% at 85% 0%,
+      color-mix(in oklab, var(--ember) 6%, transparent) 0%,
+      transparent 50%
+    ),
+    linear-gradient(180deg, var(--ink) 0%, #070605 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* film-grain overlay — static, no motion (ADR 0002 safe). */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── display headings ──────────────────────────────────────────────────── */
+.cb-display {
+  font-family: var(--font-display);
+  font-weight: 340;
+  font-optical-sizing: auto;
+  letter-spacing: -0.015em;
+  line-height: 0.98;
+}
+
+.cb-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--bone-faint);
+}
+
+.cb-rule {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--ink-line) 12%,
+    var(--ink-line) 88%,
+    transparent
+  );
+}
+
+/* ── focus ring ────────────────────────────────────────────────────────── */
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* ── page-load reveal: staggered fade-up ───────────────────────────────── */
+@keyframes cb-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cb-rise {
+  animation: cb-rise var(--dur-slow) var(--ease-out) both;
+}
+
+/* lantern pulse — opacity only (glow breathing), not motion-of-a-being. */
+@keyframes cb-glow {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.cb-lantern {
+  animation: cb-glow 4s ease-in-out infinite;
+}
+
+/* the plume crest — a slow, weightless drift, as if the cap hangs in still air. */
+@keyframes cb-drift {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-0.6deg);
+  }
+  50% {
+    transform: translateY(-12px) rotate(0.6deg);
+  }
+}
+
+.cb-crest {
+  animation: cb-drift 7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cb-rise,
+  .cb-lantern,
+  .cb-crest {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ── wallet-adapter override → match the almanac palette ───────────────────
+   Selectors are scoped to `body` (specificity 0,1,1) so they beat the library's
+   single-class base rules (0,1,0) regardless of CSS import order — no
+   !important needed (Biome forbids it). */
+body .wallet-adapter-button {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  width: 100%;
+  height: auto;
+  padding: 0.7rem 1.1rem;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--ink-line);
+  border-radius: 2px;
+  color: var(--bone);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+body .wallet-adapter-button:not([disabled]):hover {
+  background: transparent;
+  border-color: var(--amber);
+  color: var(--amber);
+}
+body .wallet-adapter-button-trigger {
+  background: transparent;
+}
+body .wallet-adapter-dropdown-list {
+  background: var(--ink-raised);
+  border: 1px solid var(--ink-line);
+  font-family: var(--font-mono);
+}
+body .wallet-adapter-modal-wrapper {
+  background: var(--ink-raised);
+  border: 1px solid var(--ink-line);
+}
+body .wallet-adapter-modal-title {
+  font-family: var(--font-display);
+  color: var(--bone);
+}

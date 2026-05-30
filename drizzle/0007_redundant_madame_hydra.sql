@@ -1,0 +1,1 @@
+ALTER TABLE "tick_log" DROP COLUMN "sentinel_call_sig";

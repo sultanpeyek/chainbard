@@ -1,0 +1,1 @@
+ALTER TABLE "tick_log" ADD COLUMN "pick_source_hit" text;

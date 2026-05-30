@@ -1,0 +1,1 @@
+ALTER TABLE "tick_log" ADD COLUMN "brief_hash" text;
