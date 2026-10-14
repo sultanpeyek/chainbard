@@ -19,7 +19,7 @@
 import { mkdir, rm } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import pngToIco from 'png-to-ico';
-import sharp from 'sharp';
+import sharp, { type Sharp } from 'sharp';
 
 const ROOT = join(import.meta.dir, '..');
 const MARK_SRC = join(ROOT, 'public/chainbard-mark.svg');
@@ -41,28 +41,28 @@ const LOGO_1024 = join(BRAND, 'logo-1024.png');
 const OUTPUTS = [FAVICON, ICON, APPLE_ICON, ICON_192, ICON_512, LOGO_512, LOGO_1024];
 
 /** Square `size`, flattened onto solid ink, no alpha — chrome/icon pipeline. */
-function raster(input: sharp.Sharp, size: number): sharp.Sharp {
+function raster(input: Sharp, size: number): Sharp {
   return input.resize(size, size, { fit: 'cover' }).flatten({ background: INK }).png();
 }
 
 /** Square `size`, alpha preserved — hero logo pipeline (transparent ground). */
-function rasterTransparent(input: sharp.Sharp, size: number): sharp.Sharp {
+function rasterTransparent(input: Sharp, size: number): Sharp {
   return input
     .resize(size, size, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
     .png();
 }
 
 /** Mark → small/chrome outputs. High density so the SVG plume stays crisp. */
-function rasterMark(size: number): sharp.Sharp {
+function rasterMark(size: number): Sharp {
   return raster(sharp(MARK_SRC, { density: 384 }), size);
 }
 
 /** Logo → hero rasters. PNG source, no density needed; transparency preserved. */
-function rasterLogo(size: number): sharp.Sharp {
+function rasterLogo(size: number): Sharp {
   return rasterTransparent(sharp(LOGO_SRC), size);
 }
 
-async function writeRaster(path: string, source: sharp.Sharp): Promise<void> {
+async function writeRaster(path: string, source: Sharp): Promise<void> {
   await mkdir(dirname(path), { recursive: true });
   await source.toFile(path);
 }

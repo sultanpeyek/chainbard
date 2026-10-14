@@ -115,7 +115,7 @@ bun run check-agent          # confirm the registered SAP AgentAccount
 
 ## Stack
 
-- Next.js 16.2.6 (App Router, Turbopack), React 19.2.4, Tailwind CSS 4
+- Next.js 16.4.1 (App Router, Turbopack), React 19.3.1, Tailwind CSS 4
 - Bun for packages and scripts, Biome for lint and format, `bun test` for tests
 - Neon Postgres with Drizzle ORM (stories, activity, agent state)
 - `@oobe-protocol-labs/synapse-sap-sdk` 0.19.8 for SAP registration, discovery, and memo
