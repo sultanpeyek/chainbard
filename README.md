@@ -13,6 +13,16 @@ Live: https://chainbard.vercel.app. Tick log: https://chainbard.vercel.app/activ
 
 This is a submission for the Superteam Earn bounty "Autonomous Agent Bounty: OOBE x Ace Data Cloud", in Category 2 (Ace Data Cloud usage through the x402 facilitator). There is no Category 1 escrow path. All buy-side Ace Data spend settles through the agent's own x402 self-broadcast rail on Synapse RPC ([ADR 0016](./docs/adr/0016-always-on-pipeline-cat2-only-redacted-surfaces.md)).
 
+## Recognition
+
+chainbard won 1st place in the Ace Data Cloud category of the Autonomous Agent Bounty. OOBE ran the bounty on Superteam Earn, and Ace Data Cloud announced the winners on 2 July 2026.
+
+[![Ace Data Cloud announces chainbard as category winner](docs/tweets/ace-data-cloud-winner-2026-07-02.png)](https://x.com/acedatacloud/status/2072582309300044078)
+
+The launch announcement on 3 June 2026 has a 55-second demo video:
+
+[![chainbard launch tweet](docs/tweets/launch-2026-06-03.png)](https://x.com/sultanpeyek/status/2062020539108188636)
+
 ## Proof on mainnet
 
 | What | Where |
